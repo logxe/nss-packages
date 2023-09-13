@@ -19,7 +19,7 @@ define KernelPackage/qca-nss-ecm
   SECTION:=kernel
   CATEGORY:=Kernel modules
   SUBMENU:=Network Support
-  DEPENDS:=@(TARGET_qualcommax||TARGET_ipq60xx) \
+  DEPENDS:=@(TARGET_qualcommax||TARGET_ipq807x||TARGET_ipq60xx) \
   		   +@NSS_DRV_IPV6_ENABLE \
 		   +@NSS_DRV_PPE_ENABLE \
 		   +@NSS_DRV_TUN6RD_ENABLE \
@@ -61,7 +61,7 @@ EXTRA_CFLAGS+= \
 		 -I$(STAGING_DIR)/usr/include/qca-mcs \
 		 -I$(STAGING_DIR)/usr/include/nat46
 
-ifneq (, $(findstring $(CONFIG_TARGET_BOARD), "qualcommax" "ipq60xx"))
+ifneq (, $(findstring $(CONFIG_TARGET_BOARD), "qualcommax" "ipq807x" "ipq60xx"))
 ECM_MAKE_OPTS+=ECM_FRONT_END_NSS_ENABLE=y \
 			   ECM_FRONT_END_SFE_ENABLE=n \
 			   ECM_NON_PORTED_SUPPORT_ENABLE=y \

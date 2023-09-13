@@ -67,7 +67,7 @@ define KernelPackage/qca-nss-drv
   SECTION:=kernel
   CATEGORY:=Kernel modules
   SUBMENU:=Network Devices
-  DEPENDS:=@(TARGET_qualcommax||TARGET_ipq60xx) +kmod-qca-nss-dp
+  DEPENDS:=@(TARGET_qualcommax||TARGET_ipq807x||TARGET_ipq60xx) +kmod-qca-nss-dp
   TITLE:=Qualcomm NSS core driver
   FILES:=$(PKG_BUILD_DIR)/qca-nss-drv.ko
   AUTOLOAD:=$(call AutoLoad,32,qca-nss-drv)
@@ -99,6 +99,9 @@ endef
 ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq807x")
     SOC="ipq807x_64"
 	subtarget:=$(CONFIG_TARGET_SUBTARGET)
+else ifeq ($(CONFIG_TARGET_BOARD), "ipq807x")
+    SOC="ipq807x_64"
+	subtarget:=$(SUBTARGET)
 else ifeq ($(CONFIG_TARGET_BOARD), "ipq60xx")
     SOC="ipq60xx_64"
 	subtarget:=$(SUBTARGET)
@@ -117,9 +120,10 @@ endef
 EXTRA_CFLAGS+= -I$(STAGING_DIR)/usr/include/qca-nss-gmac \
 			   -I$(STAGING_DIR)/usr/include/qca-nss-dp \
 			   -I$(STAGING_DIR)/usr/include/qca-ssdk \
-			   -Wno-unused-variable
+			   -Wno-unused-variable \
+			   -Wno-error=unused-function
 
-ifneq (, $(findstring $(CONFIG_TARGET_BOARD), "qualcommax" "ipq60xx"))
+ifneq (, $(findstring $(CONFIG_TARGET_BOARD), "qualcommax" "ipq807x" "ipq60xx"))
 EXTRA_CFLAGS+= -DNSS_MEM_PROFILE_MEDIUM
 endif
 
